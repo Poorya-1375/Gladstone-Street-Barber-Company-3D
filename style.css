@@ -182,7 +182,10 @@ canvas {
     backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 2vh 0;
+    overflow-y: auto;
+    box-sizing: border-box;
     z-index: 50;
     transition: opacity 0.4s ease;
     opacity: 1;
@@ -195,9 +198,11 @@ canvas {
     border-radius: 20px;
     width: 450px;
     max-width: 90%;
+    margin: auto;
     position: relative;
     box-shadow: 0 20px 50px rgba(0,0,0,0.8);
     text-align: center;
+    box-sizing: border-box;
     transform: translateY(0) scale(1);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -437,8 +442,9 @@ canvas {
     }
     
     .exit-btn {
-        top: 10px;
+        top: 0px;
         right: 10px;
+        left: auto;
         padding: 8px 16px;
         font-size: 0.9rem;
     }
