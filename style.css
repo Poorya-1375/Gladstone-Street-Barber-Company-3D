@@ -449,8 +449,17 @@ canvas {
         font-size: 0.9rem;
     }
     
-    .title {
-        font-size: 2.5rem;
+    #in-shop-overlay {
+        top: 10px;
+    }
+    
+    .choose-title {
+        font-size: 1.8rem;
+    }
+    
+    #in-shop-overlay p {
+        font-size: 0.9rem;
+        margin-top: 5px;
     }
     
     .subtitle {
