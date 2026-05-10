@@ -782,9 +782,13 @@ function enterShop() {
     if (!window.bgMusic) {
         window.bgMusic = new Audio('Image/sound/background music.mp3');
         window.bgMusic.loop = true;
-        window.bgMusic.volume = 0.5;
+        window.bgMusic.volume = 0; // Start at 0 for fade in
         window.isMusicPlaying = true;
-        window.bgMusic.play().catch(e => {
+        
+        window.bgMusic.play().then(() => {
+            // Fade in over 3.5 seconds to 0.5 volume (matches entry animation time)
+            gsap.to(window.bgMusic, { volume: 0.5, duration: 3.5 });
+        }).catch(e => {
             console.log("Audio autoplay prevented", e);
             window.isMusicPlaying = false;
             updateMusicIcon();
@@ -797,12 +801,18 @@ function enterShop() {
             } else {
                 window.bgMusic.play();
                 window.isMusicPlaying = true;
+                // If they manually toggle it on, ensure volume is back up
+                gsap.to(window.bgMusic, { volume: 0.5, duration: 1 });
             }
             updateMusicIcon();
         });
-    } else if (!window.isMusicPlaying) {
-        window.bgMusic.play();
-        window.isMusicPlaying = true;
+    } else {
+        if (!window.isMusicPlaying) {
+            window.bgMusic.volume = 0;
+            window.bgMusic.play();
+            window.isMusicPlaying = true;
+        }
+        gsap.to(window.bgMusic, { volume: 0.5, duration: 3.5 });
         updateMusicIcon();
     }
     
@@ -1051,6 +1061,29 @@ exitShopBtn.addEventListener('click', () => {
     inShopOverlay.classList.add('hidden');
     isInside = false; 
     isEntering = true; // Let GSAP control cameraTarget during exit
+    
+    // Hide the music toggle button when leaving
+    const musicToggleBtn = document.getElementById('music-toggle-btn');
+    if (musicToggleBtn) {
+        musicToggleBtn.classList.add('hidden');
+    }
+    
+    // Fade out music as we walk away (5 seconds total exit animation)
+    if (window.bgMusic && window.isMusicPlaying) {
+        gsap.to(window.bgMusic, { 
+            volume: 0, 
+            duration: 5, 
+            onComplete: () => {
+                window.bgMusic.pause();
+                window.isMusicPlaying = false;
+                // update icon state so when they re-enter it knows it's off
+                const musicIconOn = document.getElementById('music-icon-on');
+                const musicIconOff = document.getElementById('music-icon-off');
+                if(musicIconOn) musicIconOn.style.display = 'none';
+                if(musicIconOff) musicIconOff.style.display = 'block';
+            }
+        });
+    }
     
     // Smoothly turn camera back to looking out the door!
     gsap.to(cameraTarget, {
