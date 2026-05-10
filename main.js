@@ -772,6 +772,50 @@ function enterShop() {
     startOverlay.classList.add('hidden');
     isEntering = true;
     
+    // Unhide the music toggle button when entering
+    const musicToggleBtn = document.getElementById('music-toggle-btn');
+    if (musicToggleBtn) {
+        musicToggleBtn.classList.remove('hidden');
+    }
+    
+    // Start background music
+    if (!window.bgMusic) {
+        window.bgMusic = new Audio('Image/sound/background music.mp3');
+        window.bgMusic.loop = true;
+        window.bgMusic.volume = 0.5;
+        window.isMusicPlaying = true;
+        window.bgMusic.play().catch(e => {
+            console.log("Audio autoplay prevented", e);
+            window.isMusicPlaying = false;
+            updateMusicIcon();
+        });
+        
+        musicToggleBtn.addEventListener('click', () => {
+            if (window.isMusicPlaying) {
+                window.bgMusic.pause();
+                window.isMusicPlaying = false;
+            } else {
+                window.bgMusic.play();
+                window.isMusicPlaying = true;
+            }
+            updateMusicIcon();
+        });
+    } else if (!window.isMusicPlaying) {
+        window.bgMusic.play();
+        window.isMusicPlaying = true;
+        updateMusicIcon();
+    }
+    
+    function updateMusicIcon() {
+        if (window.isMusicPlaying) {
+            document.getElementById('music-icon-on').style.display = 'block';
+            document.getElementById('music-icon-off').style.display = 'none';
+        } else {
+            document.getElementById('music-icon-on').style.display = 'none';
+            document.getElementById('music-icon-off').style.display = 'block';
+        }
+    }
+    
     playBell();
     
     // 1. Swing Door Open
