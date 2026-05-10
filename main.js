@@ -549,16 +549,40 @@ function createStation(x, z, title, texture, role, rotY = 0, bookingUrl = "") {
     chairGroup.add(base, pole, seat, backrest, armL, armR, footrest);
     
     // Add barber portrait floating next to the chair
-    const portraitGeo = new THREE.PlaneGeometry(5, 5);
+    // We make them larger (7.5x7.5) so they are easier to tap on mobile
+    const portraitGeo = new THREE.PlaneGeometry(7.5, 7.5);
     const portraitMat = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
     const portrait = new THREE.Mesh(portraitGeo, portraitMat);
-    portrait.position.set(-6, 7.5, 8); // Floating to the left of the chair (viewer's perspective)
+    portrait.position.set(-6, 8.5, 8); // Floating to the left of the chair (viewer's perspective)
     portrait.rotation.y = -Math.PI / 6; // Angle them towards the door and the camera
     
     // Portrait frame (elegant gold trim)
     const edges = new THREE.EdgesGeometry(portraitGeo);
     const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xd4af37, linewidth: 2 }));
     portrait.add(line);
+    
+    // Nameplate above portrait
+    const nameCanvas = document.createElement('canvas');
+    nameCanvas.width = 512;
+    nameCanvas.height = 128;
+    const nameCtx = nameCanvas.getContext('2d');
+    nameCtx.fillStyle = 'rgba(0, 0, 0, 0)'; // Transparent background
+    nameCtx.fillRect(0, 0, 512, 128);
+    nameCtx.font = 'bold 65px "Inter", sans-serif';
+    nameCtx.fillStyle = '#d4af37'; // Primary gold
+    nameCtx.textAlign = 'center';
+    nameCtx.textBaseline = 'middle';
+    nameCtx.shadowColor = 'rgba(0,0,0,0.9)';
+    nameCtx.shadowBlur = 15;
+    nameCtx.shadowOffsetX = 3;
+    nameCtx.shadowOffsetY = 3;
+    nameCtx.fillText(title.toUpperCase(), 256, 64);
+
+    const nameTex = new THREE.CanvasTexture(nameCanvas);
+    const nameMat = new THREE.MeshBasicMaterial({ map: nameTex, transparent: true, depthWrite: false });
+    const nameMesh = new THREE.Mesh(new THREE.PlaneGeometry(8, 2), nameMat);
+    nameMesh.position.set(0, 5, 0.1); // Positioned above the portrait
+    portrait.add(nameMesh);
 
     portrait.userData = { isBarber: true, name: title, role: role, url: texture.image?.src || texture.source?.data?.src, bookingUrl: bookingUrl };
     interactables.push(portrait);
