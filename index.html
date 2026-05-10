@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gladstone Street Barber Company | 3D Experience</title>
+    <meta name="description" content="Experience Gladstone Street Barber Company in 3D. Choose your barber and book an appointment today.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <img src="Image/Logo/logo high quality.png" alt="Gladstone Street Barber Company Logo" id="loading-logo">
+        <div class="loader"></div>
+        <p id="loading-text">Loading Experience...</p>
+        <div id="loading-bar-container"><div id="loading-bar"></div></div>
+    </div>
+
+    <!-- UI Overlay (Start) -->
+    <div id="start-overlay" class="hidden">
+        <p class="subtitle">Click anywhere on the door to ENTER</p>
+        <div class="cursor-hint"></div>
+    </div>
+
+    <!-- In-Shop UI Overlay -->
+    <div id="in-shop-overlay" class="hidden">
+        <button id="exit-shop-btn" class="exit-btn">Exit Shop</button>
+        <h2 class="choose-title">Choose Your Barber</h2>
+        <p>Click on a barber to view services</p>
+    </div>
+
+    <!-- Barber Info Overlay -->
+    <div id="barber-overlay" class="hidden">
+        <div class="barber-card">
+            <button id="close-barber-btn" aria-label="Close">&times;</button>
+            <div class="barber-header">
+                <img id="barber-avatar" src="" alt="Barber Avatar">
+                <h2 id="barber-name">Barber Name</h2>
+            </div>
+            <div class="services">
+                <h3>Our Premium Services</h3>
+                <ul>
+                    <li>Haircut <span class="price">$45</span></li>
+                    <li>Skin fade <span class="price">$50</span></li>
+                    <li>Senior haircut <span class="price">$30</span></li>
+                    <li>Buzz <span class="price">$30</span></li>
+                    <li>Beard trim <span class="price">$35</span></li>
+                    <li>Shave <span class="price">$50</span></li>
+                </ul>
+            </div>
+            <p class="cash-only"><strong>* CASH ONLY *</strong></p>
+            <a href="#" target="_blank" class="book-btn">Book Appointment on Booksy</a>
+        </div>
+    </div>
+
+    <!-- Dog Dialogue -->
+    <div id="dog-dialogue" class="hidden">
+        *Woof!* Welcome!
+    </div>
+
+    <!-- Rotate Device Overlay -->
+    <div id="rotate-device-overlay">
+        <div class="rotate-content">
+            <svg class="rotate-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <h2>Please Rotate Your Device</h2>
+            <p>For the best 3D experience, please use Landscape Mode.</p>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
