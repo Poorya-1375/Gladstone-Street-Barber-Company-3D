@@ -405,7 +405,8 @@ canvas {
     .barber-card {
         padding: 20px;
         width: 90%;
-        margin: 5vh auto 50vh auto; /* Spring effect padding while keeping it somewhat centered */
+        max-height: 95vh;
+        overflow-y: auto;
     }
     
     .barber-header {
