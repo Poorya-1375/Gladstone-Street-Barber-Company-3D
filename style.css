@@ -18,16 +18,13 @@ body, html {
     background-color: var(--bg-dark);
     font-family: var(--font-body);
     color: var(--text-light);
-    overscroll-behavior: none; /* Prevents scroll chaining to browser UI */
-    touch-action: none; /* Prevents pull-to-refresh and zooming */
 }
 
 canvas {
     display: block;
-    width: 100%; /* Better than 100vw to avoid scrollbar width issues */
-    height: 100%; /* Better than 100vh to avoid mobile URL bar issues */
+    width: 100vw !important;
+    height: 100vh !important;
     outline: none;
-    touch-action: none;
 }
 
 /* Loading Screen */
@@ -192,8 +189,6 @@ canvas {
     z-index: 50;
     transition: opacity 0.4s ease;
     opacity: 1;
-    touch-action: pan-y;
-    overscroll-behavior: none;
 }
 
 .barber-card {
@@ -410,8 +405,7 @@ canvas {
     .barber-card {
         padding: 20px;
         width: 90%;
-        max-height: 95vh;
-        overflow-y: auto;
+        margin: 5vh auto 50vh auto; /* Spring effect padding while keeping it somewhat centered */
     }
     
     .barber-header {
