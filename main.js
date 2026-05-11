@@ -1124,6 +1124,20 @@ exitShopBtn.addEventListener('click', () => {
     });
 });
 
+// Handle Page Visibility (pause music when user leaves tab or minimizes browser)
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        if (window.bgMusic && !window.bgMusic.paused) {
+            window.bgMusic.pause();
+        }
+    } else {
+        // Only resume if it is *supposed* to be playing (i.e. not toggled off and they are inside)
+        if (window.bgMusic && window.isMusicPlaying) {
+            window.bgMusic.play().catch(e => console.log("Audio resume prevented by browser", e));
+        }
+    }
+});
+
 // Window Resize
 let resizeTimeout;
 window.addEventListener('resize', () => {
