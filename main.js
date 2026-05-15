@@ -746,8 +746,14 @@ window.addEventListener('mousemove', (event) => {
     } 
 });
 
-window.addEventListener('click', () => {
+window.addEventListener('pointerdown', (event) => {
     if (isOverlayOpen) return;
+    
+    // Update mouse coordinates for touch devices before raycasting
+    if (event.clientX !== undefined && event.clientY !== undefined) {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    }
     
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(interactables);
